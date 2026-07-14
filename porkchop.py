@@ -2,6 +2,7 @@ import numpy as np
 from datetime import datetime, timedelta
 from lambert import lambert
 from bodies import get_position
+import plotly.graph_objects as go
 
 def compute_porkchop(departure_start, departure_end, arrival_start, arrival_end,
                      departure_steps=30, arrival_steps=30):
@@ -66,24 +67,24 @@ if __name__ == "__main__":
     dep_strings = [d.strftime("%Y-%m-%d") for d in dep_dates]
     arr_strings = [d.strftime("%Y-%m-%d") for d in arr_dates]
 
-fig = go.Figure(data=go.Heatmap(
-        z=dv_matrix,
-        x=dep_strings,
-        y=arr_strings,
-        colorscale="Viridis_r",
-        colorbar=dict(title="Total ΔV (km/s)"),
-        zmin=3,
-        zmax=15
-    ))
+    fig = go.Figure(data=go.Heatmap(
+            z=dv_matrix,
+            x=dep_strings,
+            y=arr_strings,
+            colorscale="Viridis_r",
+            colorbar=dict(title="Total ΔV (km/s)"),
+            zmin=3,
+            zmax=15
+        ))
 
-fig.update_layout(
-    title="Earth → Mars porkchop plot (2026–2027)",
-    xaxis_title="Departure date",
-    yaxis_title="Arrival date",
-    width=900,
-    height=700
-)
+    fig.update_layout(
+        title="Earth → Mars porkchop plot (2026–2027)",
+        xaxis_title="Departure date",
+        yaxis_title="Arrival date",
+        width=900,
+        height=700
+    )
 
-fig.show()
-print("\nDone! Look for the dark region — that's your optimal launch window.")
+    fig.show()
+    print("\nDone! Look for the dark region — that's your optimal launch window.")
 
